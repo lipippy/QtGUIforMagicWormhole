@@ -24,10 +24,10 @@ Widget::Widget(QWidget *parent)
     });
 
 
-    QVBoxLayout *layout = new QVBoxLayout(this);
-    MyLineEdit *lineEdit=new MyLineEdit(this);
-    layout->addWidget(lineEdit); // 将lineEdit添加到布局中
-    setLayout(layout); // 将布局应用到当前窗口中
+    // QVBoxLayout *layout = new QVBoxLayout(this);
+    // MyLineEdit *lineEdit=new MyLineEdit(this);
+    // layout->addWidget(lineEdit); // 将lineEdit添加到布局中
+    // setLayout(layout); // 将布局应用到当前窗口中
 
 
 
