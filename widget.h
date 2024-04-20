@@ -2,6 +2,7 @@
 #define WIDGET_H
 
 #include <QWidget>
+#include <QLineEdit>
 
 QT_BEGIN_NAMESPACE
 namespace Ui {
@@ -22,7 +23,22 @@ private slots:
 
     void on_btnReceive_clicked();
 
+
+
 private:
     Ui::Widget *ui;
+
+    QLineEdit *lineEdit;
+
+
+protected:
+    void dragEnterEvent(QDragEnterEvent *event) override;
+    void dropEvent(QDropEvent *event) override;
+
+
+
+
+
+
 };
 #endif // WIDGET_H
