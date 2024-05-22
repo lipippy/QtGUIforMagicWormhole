@@ -3,6 +3,7 @@
 
 #include <QWidget>
 #include <QLineEdit>
+#include <QPushButton>
 
 QT_BEGIN_NAMESPACE
 namespace Ui {
@@ -23,17 +24,20 @@ private slots:
 
     void on_btnReceive_clicked();
 
-
+    void showFiles();
 
 private:
     Ui::Widget *ui;
 
     QLineEdit *lineEdit;
 
+    QLineEdit *fileName;
+
+    QPushButton *button;
 
 protected:
-    void dragEnterEvent(QDragEnterEvent *event) override;
-    void dropEvent(QDropEvent *event) override;
+    // void dragEnterEvent(QDragEnterEvent *event) override;
+    // void dropEvent(QDropEvent *event) override;
 
 
 
