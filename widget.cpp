@@ -21,7 +21,7 @@ Widget::Widget(QWidget *parent)
     // button=new QPushButton(this);
     // button->setGeometry(QRect(435,280,80,25));
     // button->setText("浏览");
-
+    setAcceptDrops(true);
 
 
     connect(ui->btnSendFile,SIGNAL(clicked()),this,SLOT(showFiles()));
@@ -75,33 +75,28 @@ void Widget::showFiles()
 
 
 
-// void Widget::dragEnterEvent(QDragEnterEvent *event)
-// {
-//     if (event->mimeData()->hasUrls())
-//     {
-//         QString filename=event->mimeData()->urls().at(0).fileName();
-//         QFileInfo fileInfo(filename);
-//         event->acceptProposedAction();
-//     }
-// }
 
-// void Widget::dropEvent(QDropEvent *event)
-// {
-//     const QList<QUrl> urls=event->mimeData()->urls();
-//     if (urls.isEmpty()) return;
+void Widget::dropEvent(QDropEvent *event)
+{
+    const QMimeData *mimeData = event->mimeData();
+    if (mimeData->hasUrls())
+    {
+        // 获取文件路径
+        QList<QUrl> urlList = mimeData->urls();
+        QString filePath = urlList.first().toLocalFile();
 
-//     QString fileName=urls.first().toLocalFile();
-//     // ui->lineEdit->setText(fileName);
+        // 将文件路径显示在lineEdit中
+        ui->lineEdit->setText(filePath);
+
+        event->acceptProposedAction();
+    }
+}
 
 
-//     // if(event->mimeData()->hasUrls())
-//     // {
-//     //     QList<QUrl> urls=event->mimeData()->urls();
 
-//     //     for(int i=0;i<urls.size();i++)
-//     //     {
-//     //         qDebug()<<urls.at(i).toLocalFile();
-//     //     }
-//     // }
-// }
+void Widget::dragEnterEvent(QDragEnterEvent *event)
+{
 
+    event->acceptProposedAction();
+
+}
