@@ -24,7 +24,9 @@ Widget::Widget(QWidget *parent)
 
 
 
-    connect(ui->btnSendFile,SIGNAL(clicked()),this,SLOT(showFiles()));
+    connect(ui->btnSendFile,SIGNAL(clicked()),this,SLOT(selectFile()));
+    connect(ui->btnSendFolder,SIGNAL(clicked()),this,SLOT(selectFolder()));
+
 
 
     ui->stackedWidget->setCurrentIndex(0);
@@ -65,14 +67,17 @@ void Widget::on_btnReceive_clicked()
 }
 
 
-void Widget::showFiles()
+void Widget::selectFile()
 {
-    QString str=QFileDialog::getOpenFileName
-        (this,"open file","/","textfile(*.txt);;C file(*.cpp);;All file(*.*)");
-
-    ui->lineEdit->setText(str.toUtf8());
+    QString fileName = QFileDialog::getOpenFileName(this, "选择你要发送的文件", "", "All Files (*.*)");
+    ui->lineEdit->setText(fileName.toUtf8());
 }
 
+void Widget::selectFolder()
+{
+    QString fileName = QFileDialog::getExistingDirectory(this, "选择你要发送的文件夹", "All Files (*.*)");
+    ui->lineEdit->setText(fileName.toUtf8());
+}
 
 
 // void Widget::dragEnterEvent(QDragEnterEvent *event)

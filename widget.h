@@ -24,7 +24,9 @@ private slots:
 
     void on_btnReceive_clicked();
 
-    void showFiles();
+    void selectFile();
+
+    void selectFolder();
 
 private:
     Ui::Widget *ui;
