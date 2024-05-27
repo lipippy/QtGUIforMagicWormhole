@@ -38,10 +38,10 @@ private:
     QPushButton *button;
 
 protected:
-    // void dragEnterEvent(QDragEnterEvent *event) override;
-    // void dropEvent(QDropEvent *event) override;
 
+    void dropEvent(QDropEvent *event) override;
 
+    void dragEnterEvent(QDragEnterEvent *event) override;
 
 
 
