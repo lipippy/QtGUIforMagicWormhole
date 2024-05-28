@@ -9,17 +9,16 @@ CONFIG += c++17
 #DEFINES += QT_DISABLE_DEPRECATED_BEFORE=0x060000    # disables all the APIs deprecated before Qt 6.0.0
 
 SOURCES += \
-    magic_wormhole.cpp \
-    main.cpp \
-    tst_magic_wormhole.cpp \
-    widget.cpp
+    src/magic_wormhole.cpp \
+    src/main.cpp \
+    src/widget.cpp
 
 HEADERS += \
-    magic_wormhole.h \
-    widget.h
+    src/magic_wormhole.h \
+    src/widget.h
 
 FORMS += \
-    widget.ui
+    res/widget.ui
 
 # Default rules for deployment.
 qnx: target.path = /tmp/$${TARGET}/bin
