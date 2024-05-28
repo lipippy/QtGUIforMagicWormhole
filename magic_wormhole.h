@@ -1,0 +1,4 @@
+#ifndef MAGIC_WORMHOLE_H
+#define MAGIC_WORMHOLE_H
+
+#endif // MAGIC_WORMHOLE_H

@@ -9,10 +9,13 @@ CONFIG += c++17
 #DEFINES += QT_DISABLE_DEPRECATED_BEFORE=0x060000    # disables all the APIs deprecated before Qt 6.0.0
 
 SOURCES += \
+    magic_wormhole.cpp \
     main.cpp \
+    tst_magic_wormhole.cpp \
     widget.cpp
 
 HEADERS += \
+    magic_wormhole.h \
     widget.h
 
 FORMS += \
@@ -25,3 +28,10 @@ else: unix:!android: target.path = /opt/$${TARGET}/bin
 
 RESOURCES += \
     res.qrc
+
+win32:CONFIG(release, debug|release): LIBS += -L$$PWD/magic-wormhole.rs/target/release/ -lwormhole_rs_lib.dll
+else:win32:CONFIG(debug, debug|release): LIBS += -L$$PWD/magic-wormhole.rs/target/debug/ -lwormhole_rs_lib.dll
+else:unix: LIBS += -L$$PWD/magic-wormhole.rs/target/ -lwormhole_rs_lib.dll
+
+INCLUDEPATH += $$PWD/magic-wormhole.rs/target/release
+DEPENDPATH += $$PWD/magic-wormhole.rs/target/release

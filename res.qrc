@@ -3,4 +3,7 @@
         <file>res/download.png</file>
         <file>res/send.png</file>
     </qresource>
+    <qresource prefix="/">
+        <file>tst_magic_wormhole.qml</file>
+    </qresource>
 </RCC>
