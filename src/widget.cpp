@@ -6,8 +6,11 @@
 #include <QUrl>
 #include <QFileInfo>
 #include <QFileDialog>
-
-
+#include <QtConcurrent>
+#include <QThread>
+#include <QtConcurrent>
+#include <QFuture>
+#include "magic_wormhole.h"
 
 Widget::Widget(QWidget *parent)
     : QWidget(parent)
@@ -69,14 +72,26 @@ void Widget::on_btnReceive_clicked()
 
 void Widget::selectFile()
 {
-    QString fileName = QFileDialog::getOpenFileName(this, "选择你要发送的文件", "", "All Files (*.*)");
-    ui->lineEdit->setText(fileName.toUtf8());
+    QString filePath = QFileDialog::getOpenFileName(this, "选择你要发送的文件", "", "All Files (*.*)");
+    QFileInfo fileInfo(filePath);
+
+    QString fileName = fileInfo.fileName();
+    auto code = QtConcurrent::run([&](){
+        return wormhole::send(filePath, fileName,ui->lineEdit);
+    });
 }
 
 void Widget::selectFolder()
 {
-    QString fileName = QFileDialog::getExistingDirectory(this, "选择你要发送的文件夹", "All Files (*.*)");
-    ui->lineEdit->setText(fileName.toUtf8());
+    QString filePath = QFileDialog::getExistingDirectory(this, "选择你要发送的文件夹", "All Files (*.*)");
+
+
+    QFileInfo fileInfo(filePath);
+    QString fileName = fileInfo.fileName();
+
+    auto code = QtConcurrent::run([&](){
+        return wormhole::send(filePath, fileName, ui->lineEdit);
+    });
 }
 
 
