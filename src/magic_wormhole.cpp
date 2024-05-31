@@ -5,72 +5,54 @@
 #include <QObject>
 const QString command = "wormhole-rs.exe";
 
-QString wormhole::send(QString FilePath,QString NewName,QLineEdit * lineEdit)
+void wormhole::send(QString filePath,QString newName,QLineEdit * lineEdit)
 {
-    // 创建一个 QProcess 对象
     QProcess process;
+    process.setProgram("wormhole-rs.exe"); // 替换为您的命令行应用程序名称
+
+    QStringList arguments;
+    arguments <<"send" <<filePath.toLocal8Bit()<<"--rename"<<newName.toLocal8Bit();
+    process.setArguments(arguments);
     QString currentDir = QDir::currentPath();
     currentDir += "/release/core";
     qDebug() << "Current working directory:" << currentDir;
     process.setWorkingDirectory(currentDir);
-    qDebug()<<"process.setWorkingDirectory(currentDir)";
-
-    QStringList arguments;
-    arguments <<"send" <<FilePath.toLocal8Bit()<<"--rename"<<NewName.toLocal8Bit();
-
-    // 设置 QProcess 的输出模式
-    process.setProcessChannelMode(QProcess::MergedChannels);
-
     // 启动进程
-    process.start(command, arguments);
+    process.start();
 
-    // 连接 readyReadStandardOutput() 信号
-    QFileDevice::connect(&process, &QProcess::readyReadStandardOutput, &process, [&]() {
-        // 获取实时输出
-        QString output = process.readAllStandardOutput();
-        qDebug() << "Command output: " << output;
-        lineEdit->setText(output);
+    // 连接 readyReadStandardOutput 信号以获取实时输出
+    QObject::connect(&process, &QProcess::readyReadStandardOutput, [&]() {
+        QByteArray data = process.readAllStandardOutput();
+        qDebug() << "Output: " << data;
+        lineEdit->setText("文件传输口令已经复制到您的剪切板");
     });
 
     // 等待进程完成
-    if (!process.waitForFinished(1000000)) {
-        qDebug() << "Process error: " << process.errorString();
-        return "";
-    }
-    return "";
+    process.waitForFinished();
 }
 
-bool wormhole::receive(QString Code)
+bool wormhole::receive(QString Code,QLineEdit * lineEdit)
 {
-    // 创建一个 QProcess 对象
     QProcess process;
+    process.setProgram("wormhole-rs.exe"); // 替换为您的命令行应用程序名称
+
+    QStringList arguments;
+    arguments <<"receive" <<Code.toLocal8Bit();
+    process.setArguments(arguments);
     QString currentDir = QDir::currentPath();
     currentDir += "/release/core";
     qDebug() << "Current working directory:" << currentDir;
     process.setWorkingDirectory(currentDir);
-    qDebug()<<"process.setWorkingDirectory(currentDir)";
-
-    QStringList arguments;
-    arguments <<"receive" <<Code;
-
-    // 设置 QProcess 的输出模式
-    process.setProcessChannelMode(QProcess::MergedChannels);
-
     // 启动进程
-    process.start(command, arguments);
+    process.start();
 
-    // 连接 readyReadStandardOutput() 信号
-    QFileDevice::connect(&process, &QProcess::readyReadStandardOutput, &process, [&]() {
-        // 获取实时输出
-        QString output = process.readAllStandardOutput();
-        qDebug() << "Command output: " << output;
+    // 连接 readyReadStandardOutput 信号以获取实时输出
+    QObject::connect(&process, &QProcess::readyReadStandardOutput, [&]() {
+        QByteArray data = process.readAllStandardOutput();
+        qDebug() << "Output: " << data;
+        lineEdit->setText(data);
     });
 
     // 等待进程完成
-    if (!process.waitForFinished(1000000)) {
-        qDebug() << "Process error: " << process.errorString();
-        return "";
-    }
-
-    return true;
+    process.waitForFinished();
 }

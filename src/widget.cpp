@@ -29,6 +29,7 @@ Widget::Widget(QWidget *parent)
 
     connect(ui->btnSendFile,SIGNAL(clicked()),this,SLOT(selectFile()));
     connect(ui->btnSendFolder,SIGNAL(clicked()),this,SLOT(selectFolder()));
+    connect(ui->btnReceiveFile,SIGNAL(clicked()),this,SLOT(receiveFile()));
 
 
 
@@ -76,9 +77,15 @@ void Widget::selectFile()
     QFileInfo fileInfo(filePath);
 
     QString fileName = fileInfo.fileName();
-    auto code = QtConcurrent::run([&](){
-        return wormhole::send(filePath, fileName,ui->lineEdit);
-    });
+
+    try {
+        auto code = QtConcurrent::run([&](){
+            return wormhole::send(filePath, fileName,ui->lineEdit);
+        });
+    } catch (...) {
+        qDebug() << "Error: ";
+    }
+
 }
 
 void Widget::selectFolder()
@@ -89,11 +96,21 @@ void Widget::selectFolder()
     QFileInfo fileInfo(filePath);
     QString fileName = fileInfo.fileName();
 
-    auto code = QtConcurrent::run([&](){
-        return wormhole::send(filePath, fileName, ui->lineEdit);
-    });
+    try{
+        auto code = QtConcurrent::run([&](){
+            return wormhole::send(filePath, fileName, ui->lineEdit);
+        });
+    }
+    catch (...){
+        qDebug() << "Error: ";
+    }
 }
 
+void Widget::receiveFile()
+{
+    QString code = ui->lineEdit->text();
+    wormhole::receive(code,ui->lineEdit);
+}
 
 
 void Widget::dropEvent(QDropEvent *event)

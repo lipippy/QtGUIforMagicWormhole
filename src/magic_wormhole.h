@@ -4,7 +4,7 @@
 #include <QString>
 #endif // MAGIC_WORMHOLE_H
 namespace wormhole{
-QString send(QString FilePath,QString NewName,  QLineEdit * lineEdit);
+    void send(QString filePath,QString newName,  QLineEdit * lineEdit);
 
-    bool receive(QString Code);
+    bool receive(QString Code,QLineEdit * lineEdit);
 }

@@ -28,6 +28,8 @@ private slots:
 
     void selectFolder();
 
+    void receiveFile();
+
 private:
     Ui::Widget *ui;
 

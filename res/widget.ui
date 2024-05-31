@@ -126,7 +126,7 @@ QPushButton {
 }</string>
         </property>
         <property name="currentIndex">
-         <number>0</number>
+         <number>1</number>
         </property>
         <widget class="QWidget" name="page">
          <widget class="QPushButton" name="btnSendFolder">
@@ -181,7 +181,7 @@ QPushButton:pressed
            <string/>
           </property>
           <property name="pixmap">
-           <pixmap resource="res.qrc">:/icons/res/send.png</pixmap>
+           <pixmap resource="../res.qrc">:/icons/res/send.png</pixmap>
           </property>
           <property name="scaledContents">
            <bool>true</bool>
@@ -344,7 +344,7 @@ li.checked::marker { content: &quot;\2612&quot;; }
            <string/>
           </property>
           <property name="pixmap">
-           <pixmap resource="res.qrc">:/icons/res/download.png</pixmap>
+           <pixmap resource="../res.qrc">:/icons/res/download.png</pixmap>
           </property>
           <property name="scaledContents">
            <bool>true</bool>
@@ -456,7 +456,7 @@ QPushButton:pressed
   </layout>
  </widget>
  <resources>
-  <include location="res.qrc"/>
+  <include location="../res.qrc"/>
  </resources>
  <connections/>
 </ui>
